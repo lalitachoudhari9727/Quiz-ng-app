@@ -1,0 +1,24 @@
+<form  (submit)="onQuizSubmit()" >
+  <div class="row col-6" *ngIf="quizData" style="border-style: solid;margin-left: 345px">
+    <h3>{{quizData.name}} Application</h3>
+    <span style="font-weight: lighter;font-size: medium;font-family: cursive"> {{quizData.description}}</span>
+    <div class="col-12" *ngFor="let question of quizData.questions;let i=index">
+      <p style="font-weight: bold">{{i+1}}) {{question.name}}</p>
+      <div class="row col-6" *ngFor="let option of question.options">
+        <input type="radio" name="{{question.id}}" [value]="option.name" (change)="onSelectOption(option,question)" [checked]="option.selected" >{{option.name}}
+      </div>
+    </div>
+    <div *ngIf="isSubmit && totalAnsweredQuestion !== quizData.questions.length" class="alert alert-danger" role="alert">
+      <strong>Oh snap!</strong> Please answer all questions and try submitting again.
+    </div>
+    <button type="submit" class="btn btn-primary" value="Submit quiz" style="margin-left: 217px;">Submit Quiz</button>
+
+  </div>
+
+  <br>
+  <div *ngIf="isSubmit && quizData && totalAnsweredQuestion == quizData.questions.length" style="text-align: center;margin-left: 345px;border-style: solid;width: 40%;">
+    <p><strong>Total Questions:{{quizData.questions.length}}</strong></p>
+    <p><strong> Total answered questions:{{totalAnsweredQuestion}}</strong></p>
+    <p><strong>Total correct answers:{{totalCorrectAnswers}}</strong></p>
+  </div>
+</form>
